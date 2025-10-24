@@ -1,18 +1,52 @@
+"""
+EmailAgent: An agent for various email tasks
+
+Subtasks:
+1. Retrieve emails
+2. Build prompts
+
+
+Process:
+User chooses which LLM to use. -> Implement an LLM interface.
+User prompts the agent with an email-related task. -> Add to the system prompt
+Agent is provided with tools to perform email tasks. -> Write tool interfaces, parse agent output for tool call
+Tool calls are made as needed to complete the task. -> add tool output to agent context
+The agent composes a final response to the user with all given information. -> Have the LLM review and revise its output.
+
+
+Evals:
+Evaluate each step in the trace.
+Objective:
+1. Which tool calls were made?
+2. Were the tool calls appropriate for the task?
+3. Was the task completed correctly?
+4. Were all tasks performed?
+5. Time taken to complete the task?
+6. Check any factual data vs ground truth
+
+Subjective:
+1. Is the tone appropriate
+2. Is the summary accurate?
+3. Is the summary complete?
+
+"""
+
+
 
 from datetime import datetime
 
 class EmailAgent:
 
-    def __init__(self, llm_interface, max_emails = 50):
+    def __init__(self, llm, max_emails = 50):
         """
         Initialize the EmailAgent with a language model interface and maximum email limit.
 
         Args:
-            llm_interface: An instance of a language model interface for processing email content.
+            llm: a language model for processing email content.
             max_emails (int): Maximum number of emails to process in a single operation.
         """
 
-        self.llm = llm_interface
+        self.llm = llm
         self.max_emails = max_emails
         self.system_prompt = self._build_system_prompt()
 
