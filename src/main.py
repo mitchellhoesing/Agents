@@ -1,3 +1,4 @@
+from agents.EmailAgent import EmailAgent
 """
 
 Process:
@@ -26,4 +27,7 @@ Subjective:
 """
 
 def main():
-    
+    email_agent = EmailAgent(llm=None)
+
+if __name__ == "__main__":
+    main()

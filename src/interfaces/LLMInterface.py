@@ -22,6 +22,10 @@ class LLMClient(ABC):
             str: The generated response from the LLM.
         """
 
+        pass
+
+    
+
     
 
 

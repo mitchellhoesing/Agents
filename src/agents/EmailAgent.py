@@ -11,9 +11,9 @@ Subtasks:
 from datetime import datetime
 from interfaces import LLMInterface
 
-class EmailAgent(LLMInterface):
+class EmailAgent():
 
-    def __init__(self, llm, max_emails = 50):
+    def __init__(self, llm: LLMInterface, max_emails = 50):
         """
         Initialize the EmailAgent with a language model interface and maximum email limit.
 
@@ -24,59 +24,54 @@ class EmailAgent(LLMInterface):
 
         self.llm = llm
         self.max_emails = max_emails
-        self.system_prompt = self._build_system_prompt()
 
-    def _build_system_prompt(self):
+    def _build_system_prompt(self) -> str:
         """
-        Build the system prompt for the language model for email summarization.
+        Build the system prompt for email processing tasks.
 
         Returns:
-            str: The constructed system prompt.
+            str: The system prompt.
         """
-        prompt = """You are an expert email summarization assistant. Your task is to:
+
+        system_prompt = """You are an expert email summarization assistant. Your task is to:
                     1. Identify the key information in each email (sender, subject, main points)
                     2. Categorize emails by priority (High, Medium, Low)
                     3. Extract action items if any
                     4. Provide a concise summary
 
                     Be clear, factual, and actionable in your summaries."""
-
-        return prompt
-
-    def summarize_single_email(self, email: dict) -> dict:
-        """
-        Summarize a single email
         
+        return system_prompt
+    
+    def generate(self, emails: list) -> str:
+        """
+        Generate a summary of the provided emails using the LLM.
+
         Args:
-            email: dict with keys 'from', 'subject', 'body', 'date'
-            
+            emails (list): A list of email dicts with 'sender', 'subject', and 'body'.
+
         Returns:
-            dict with summary, priority, and action items
+            str: The generated email summary.
         """
-        prompt = f"""Summarize this email:
 
-        From: {email.get('from', 'Unknown')}
-        Subject: {email.get('subject', 'No subject')}
-        Date: {email.get('date', 'Unknown')}
-
-        Body:
-        {email.get('body', '')}
-
-        Provide:
-        1. A 2-3 sentence summary
-        2. Priority level (High/Medium/Low)
-        3. Action items (if any)"""
-
-        response = self.llm.generate(
-            system_prompt=self.system_prompt,
-            user_prompt=prompt
-        )
+        # system_prompt = self._build_system_prompt()
         
-        return {
-            'original': email,
-            'summary': response,
-            'timestamp': datetime.now().isoformat()
-        }
+        # email_contents = "\n\n".join([f"From: {email['sender']}\nSubject: {email['subject']}\nBody: {email['body']}" for email in emails[:self.max_emails]])
+        
+        # messages = [
+        #     {"role": "system", "content": system_prompt},
+        #     {"role": "user", "content": f"Please summarize the following emails:\n\n{email_contents}"}
+        # ]
+        
+        # summary = self.llm.generate(messages, max_tokens=500)
+
+        summary = "This is a placeholder summary of the emails."
+        
+        return summary
+
+
+
+
 
 
 
