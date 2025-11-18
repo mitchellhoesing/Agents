@@ -21,6 +21,30 @@ class BaseLLMClient(LLMClient):
         pass
 
     @abstractmethod
+    def combine_prompts(self, system_prompt:str, user_prompt:str) -> None:
+        """
+        Combine system and user prompts into a single prompt.
+
+        Args:
+            system_prompt (str): The system prompt.
+            user_prompt (str): The user prompt.
+        Returns:
+            None
+        """
+        pass
+
+    @abstractmethod
+    def generate_log_trace(self, interaction_details:dict) -> dict:
+        """
+        Generate a log trace of the LLM interaction.
+
+        Args:
+            interaction_details (dict): Details of the interaction to log.
+        Returns:
+            dict: The trace of the LLM Client pipeline.
+        """
+        pass
+
     def read_user_query(self) -> str:
         """
         Read user query stdin.
