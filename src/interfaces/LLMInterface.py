@@ -4,15 +4,14 @@ Interface module for Large Language Models (LLMs).
 generate_reponse(): 
 read_user_prompt()
 combine_prompts()
-evaluate_response()
-log_trace()
+generate_log_trace()
 """
 
 from abc import ABC, abstractmethod
 
 class LLMClient(ABC):
     """
-    Abstract base class for Large Language Model clients.
+    Interface for Large Language Model clients.
     """
 
     @abstractmethod
@@ -31,14 +30,14 @@ class LLMClient(ABC):
         pass
 
     @abstractmethod
-    def read_user_prompt(self, prompt_file:str) -> None:
+    def read_user_query(self) -> str:
         """
-        Read a user prompt from a file.
+        Read user query stdin.
 
         Args:
-            prompt_file (str): Path to the prompt file.
-        Returns:
             None
+        Returns:
+            the user prompt as a string.
         """
         pass
 
@@ -52,6 +51,18 @@ class LLMClient(ABC):
             user_prompt (str): The user prompt.
         Returns:
             None
+        """
+        pass
+
+    @abstractmethod
+    def generate_log_trace(self, interaction_details:dict) -> dict:
+        """
+        Generate a log trace of the LLM interaction.
+
+        Args:
+            interaction_details (dict): Details of the interaction to log.
+        Returns:
+            dict: The trace of the LLM Client pipeline.
         """
         pass
     
