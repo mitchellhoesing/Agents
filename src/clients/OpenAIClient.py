@@ -1,9 +1,9 @@
 import openai
 
-from interfaces import LLMInterface
+from base import BaseLLMClient
 
 
-class OpenAIClient(LLMInterface):
+class OpenAIClient(BaseLLMClient):
     """
     Open AI implementation of LLMInterface
     """
