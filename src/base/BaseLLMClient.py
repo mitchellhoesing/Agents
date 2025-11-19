@@ -1,7 +1,7 @@
-from interfaces.LLMInterface import LLMClient
+from interfaces.LLMInterface import LLMInterface
 from abc import abstractmethod
 
-class BaseLLMClient(LLMClient):
+class BaseLLMClient(LLMInterface):
     """
     Base implementation of LLMInterface
     """
@@ -20,18 +20,28 @@ class BaseLLMClient(LLMClient):
         """
         pass
 
-    @abstractmethod
-    def combine_prompts(self, system_prompt:str, user_prompt:str) -> None:
+    def _combine_prompts(self, system_prompt:str, user_query:str) -> str:
         """
         Combine system and user prompts into a single prompt.
 
         Args:
             system_prompt (str): The system prompt.
-            user_prompt (str): The user prompt.
+            user_query (str): The user prompt.
         Returns:
             None
         """
-        pass
+
+        system_prompt = """You are an expert email summarization assistant. Your task is to:
+                    1. Identify the key information in each email (sender, subject, main points)
+                    2. Categorize emails by priority (High, Medium, Low)
+                    3. Extract action items if any
+                    4. Provide a concise summary
+
+                    Be clear, factual, and actionable in your summaries."""
+        
+        combined_prompt = f"{system_prompt}\n\nUser Query: {user_query}"
+        
+        return combined_prompt
 
     @abstractmethod
     def generate_log_trace(self, interaction_details:dict) -> dict:
@@ -55,5 +65,6 @@ class BaseLLMClient(LLMClient):
             the user prompt as a string.
         """
         user_query = input("Please enter your query: ")
+        agent_query = self._combine_prompts
 
         return user_query
