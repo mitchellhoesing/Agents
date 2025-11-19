@@ -9,7 +9,7 @@ generate_log_trace()
 
 from abc import ABC, abstractmethod
 
-class LLMClient(ABC):
+class LLMInterface(ABC):
     """
     Interface for Large Language Model clients.
     """
@@ -42,7 +42,7 @@ class LLMClient(ABC):
         pass
 
     @abstractmethod
-    def combine_prompts(self, system_prompt:str, user_prompt:str) -> None:
+    def _combine_prompts(self, system_prompt:str, user_prompt:str) -> None:
         """
         Combine system and user prompts into a single prompt.
 
