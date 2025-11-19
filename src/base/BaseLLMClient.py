@@ -5,9 +5,33 @@ class BaseLLMClient(LLMInterface):
     """
     Base implementation of LLMInterface
     """
+    def __init__(self):
+        """
+        Initialize the BaseLLMClient.
+
+        Args:
+            None
+        """
+        self.__system_prompt = """You are an expert email summarization assistant. Your task is to:
+                    1. Identify the key information in each email (sender, subject, main points)
+                    2. Categorize emails by priority (High, Medium, Low)
+                    3. Extract action items if any
+                    4. Provide a concise summary
+
+                    Be clear, factual, and actionable in your summaries."""
+    
+    @property
+    def system_prompt(self) -> str:
+        """
+        Get the system prompt.
+
+        Returns:
+            str: The system prompt.
+        """
+        return self.__system_prompt
 
     @abstractmethod
-    def generate_response(self, messages: list, max_tokens: int = 150) -> str:
+    def generate_response(self, messages: list, user_query: str, max_tokens: int = 150) -> str:
         """
         Generate a response from the LLM based on the provided messages.
 
@@ -19,29 +43,6 @@ class BaseLLMClient(LLMInterface):
             str: The generated response from the LLM.
         """
         pass
-
-    def _combine_prompts(self, system_prompt:str, user_query:str) -> str:
-        """
-        Combine system and user prompts into a single prompt.
-
-        Args:
-            system_prompt (str): The system prompt.
-            user_query (str): The user prompt.
-        Returns:
-            None
-        """
-
-        system_prompt = """You are an expert email summarization assistant. Your task is to:
-                    1. Identify the key information in each email (sender, subject, main points)
-                    2. Categorize emails by priority (High, Medium, Low)
-                    3. Extract action items if any
-                    4. Provide a concise summary
-
-                    Be clear, factual, and actionable in your summaries."""
-        
-        combined_prompt = f"{system_prompt}\n\nUser Query: {user_query}"
-        
-        return combined_prompt
 
     @abstractmethod
     def generate_log_trace(self, interaction_details:dict) -> dict:
@@ -65,6 +66,5 @@ class BaseLLMClient(LLMInterface):
             the user prompt as a string.
         """
         user_query = input("Please enter your query: ")
-        agent_query = self._combine_prompts
 
         return user_query
