@@ -15,7 +15,7 @@ class LLMInterface(ABC):
     """
 
     @abstractmethod
-    def generate_response(self, messages:list, max_tokens:int=150) -> str:
+    def generate_response(self, messages:list, user_query: str, max_tokens:int=150) -> str:
         """
         Generate a response from the LLM based on the provided messages.
 
@@ -38,19 +38,6 @@ class LLMInterface(ABC):
             None
         Returns:
             the user prompt as a string.
-        """
-        pass
-
-    @abstractmethod
-    def _combine_prompts(self, system_prompt:str, user_prompt:str) -> None:
-        """
-        Combine system and user prompts into a single prompt.
-
-        Args:
-            system_prompt (str): The system prompt.
-            user_prompt (str): The user prompt.
-        Returns:
-            None
         """
         pass
 
