@@ -19,3 +19,7 @@ class TestBaseLLMClient(unittest.TestCase):
         with patch('builtins.input', return_value='What is the capital of France?'):
             user_query = self.llm_client.read_user_query()
             self.assertEqual(user_query, 'What is the capital of France?')
+
+
+if __name__ == '__main__':
+    unittest.main()
