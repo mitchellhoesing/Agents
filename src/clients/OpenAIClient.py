@@ -8,9 +8,10 @@ class OpenAIClient(BaseLLMClient):
     Open AI implementation of LLMInterface
     """
     def __init__(self, default_model: str = "gpt-3.5-turbo"):
+        super().__init__()
         self.default_model = default_model
 
-    def generate_response(self, messages: list, max_tokens: int = 150) -> str:
+    def generate_response(self, messages: list, user_query: str, max_tokens: int = 150) -> str:
         """
         Generate a response from the OpenAI LLM based on the provided messages.
 
@@ -18,25 +19,17 @@ class OpenAIClient(BaseLLMClient):
             messages (list): A list of message dicts with 'role' and 'content'.
             max_tokens (int): Maximum number of tokens to generate.
         """
-
+    
+        messages = [
+            {"role": "system", "content": self.system_prompt},
+            {"role": "user", "content": user_query}
+        ]
         response = openai.ChatCompletion.create(
             model=self.default_model,
             messages=messages,
             max_tokens=max_tokens
         )
         return response.choices[0].message['content']
-    
-    def combine_prompts(self, system_prompt:str, user_prompt:str) -> None:
-        """
-        Combine system and user prompts into a single prompt.
-
-        Args:
-            system_prompt (str): The system prompt.
-            user_prompt (str): The user prompt.
-        Returns:
-            None
-        """
-        pass
 
     def generate_log_trace(self, interaction_details:dict) -> dict:
         """
