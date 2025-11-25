@@ -1,6 +1,6 @@
 import openai
 
-from base.BaseLLMClient import BaseLLMClient
+from base.base_llm_client import BaseLLMClient
 
 
 class OpenAIClient(BaseLLMClient):

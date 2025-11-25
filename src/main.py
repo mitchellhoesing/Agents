@@ -1,4 +1,4 @@
-from agents.EmailAgent import EmailAgent
+from agents.email_agent import EmailAgent
 """
 
 Process:
