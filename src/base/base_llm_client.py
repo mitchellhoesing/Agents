@@ -1,4 +1,4 @@
-from interfaces.LLMInterface import LLMInterface
+from interfaces.llm_interface import LLMInterface
 from abc import abstractmethod
 
 class BaseLLMClient(LLMInterface):

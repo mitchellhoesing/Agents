@@ -31,6 +31,7 @@ class OpenAIClient(BaseLLMClient):
         )
         return response.choices[0].message['content']
 
+    # TODO: Implement logging functionality
     def generate_log_trace(self, interaction_details:dict) -> dict:
         """
         Generate a log trace of the LLM interaction.

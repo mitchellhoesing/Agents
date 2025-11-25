@@ -9,11 +9,11 @@ Subtasks:
 
 
 from datetime import datetime
-from interfaces import LLMInterface
+from interfaces import llm_interface
 
 class EmailAgent():
 
-    def __init__(self, llm: LLMInterface, max_emails = 50):
+    def __init__(self, llm: llm_interface, max_emails = 50):
         """
         Initialize the EmailAgent with a language model interface and maximum email limit.
 

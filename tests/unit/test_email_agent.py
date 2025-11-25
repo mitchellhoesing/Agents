@@ -11,7 +11,7 @@ from agents.EmailAgent import EmailAgent  # Adjusted import path
 class TestEmailAgent(unittest.TestCase):
 
     def setUp(self):
-        self.email_agent = EmailAgent(llm_interface=None)
+        self.email_agent = EmailAgent(llm=None)
 
     def test_build_system_prompt(self):
         self.expected_prompt = """You are an expert email summarization assistant. Your task is to:
