@@ -1,11 +1,6 @@
 import unittest
-import os
-import sys
+
 from unittest.mock import patch, Mock, MagicMock
-
-# Add the src directory to the system path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
-
 from clients.openai_client import OpenAIClient
 
 
