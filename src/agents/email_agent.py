@@ -1,3 +1,8 @@
+
+from datetime import datetime
+from interfaces import llm_interface
+from interfaces import email_interface
+
 """
 EmailAgent: An agent for various email tasks
 
@@ -6,14 +11,9 @@ Subtasks:
 2. Build prompts
 """
 
-
-
-from datetime import datetime
-from interfaces import llm_interface
-
 class EmailAgent():
 
-    def __init__(self, llm: llm_interface, max_emails = 50):
+    def __init__(self, llm: llm_interface, email_client: email_interface, max_emails = 50):
         """
         Initialize the EmailAgent with a language model interface and maximum email limit.
 
@@ -24,6 +24,7 @@ class EmailAgent():
 
         self.llm = llm
         self.max_emails = max_emails
+        self.email_client = email_client
 
     def _build_system_prompt(self) -> str:
         """
@@ -66,8 +67,12 @@ class EmailAgent():
         # summary = self.llm.generate(messages, max_tokens=500)
 
         summary = "This is a placeholder summary of the emails."
-        
+
         return summary
+        def _retrieve_emails(self):
+            pass
+        
+        
 
 
 

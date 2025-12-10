@@ -1,4 +1,6 @@
 from agents.email_agent import EmailAgent
+import argparse
+
 """
 
 Process:
@@ -38,7 +40,22 @@ Subjective:
 """
 
 def main():
-    email_agent = EmailAgent(llm=None)
+    parser = argparse.ArgumentParser(description='Email Agent with LLM')
+    parser.add_argument(
+        '--provider',
+        choices=['gmail', 'outlook', 'sendgrid'],
+        help='Email provider for agent to retrieve emails from'
+    )
+    parser.add_argument(
+        '--llm',
+        choices=['GPT', 'Claude', 'Gemini'],
+        help='LLM for agent to use'
+    )
+    print(parser.parse_args())
+
+    email_agent = EmailAgentFactory.create_email_agent(provider=parser.parse_args().provider, llm=parser.parse_args().llm)
+    
+    #email_agent = EmailAgent(llm=None)
 
 if __name__ == "__main__":
     main()

@@ -1,9 +1,6 @@
 import unittest
 
 from unittest.mock import patch
-
-
-
 from clients.openai_client import OpenAIClient
 
 class TestBaseLLMClient(unittest.TestCase):
