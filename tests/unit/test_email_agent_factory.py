@@ -14,9 +14,8 @@ class TestEmailAgentFactory(unittest.TestCase):
         self.assertIsInstance(self.email_agent.llm, OpenAIClient)
 
     def test_create_email_agent_invalid_provider(self):
-        with self.assertRaises(ValueError):
-            EmailAgentFactory.create_email_agent('invalid', 'GPT')
+        self.assertRaises(ValueError, EmailAgentFactory.create_email_agent, 'invalid', 'GPT')
 
     def test_create_email_agent_invalid_llm(self):
-        with self.assertRaises(ValueError):
-            EmailAgentFactory.create_email_agent('gmail', 'invalid')
+        self.assertRaises(ValueError, EmailAgentFactory.create_email_agent, 'gmail', 'invalid')
+        
