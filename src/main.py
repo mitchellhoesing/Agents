@@ -51,10 +51,9 @@ def main():
         choices=['GPT', 'Claude', 'Gemini'],
         help='LLM for agent to use'
     )
-    print(parser.parse_args())
 
     email_agent = EmailAgentFactory.create_email_agent(provider=parser.parse_args().provider, llm=parser.parse_args().llm)
-    
+
     #email_agent = EmailAgent(llm=None)
 
 if __name__ == "__main__":
