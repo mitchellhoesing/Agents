@@ -1,36 +1,31 @@
 import unittest
-
-from unittest.mock import patch, Mock, MagicMock
+from unittest.mock import Mock, MagicMock, patch
 from email_api.gmail_repository import GmailRepository
 
-
-class TestGmailRepository(unittest.TestCase):
-    
+class TestGmailRepositoryUnit(unittest.TestCase):
     def setUp(self):
-        """Set up test fixtures before each test."""
-        self.client = GmailRepository()
+        self.mock_service = Mock()
+        self.repo = GmailRepository(self.mock_service)
+    
+        self.mock_response_data = {
+            'messages': [
+                {'id': '16f8d098a58', 'threadId': '16f8d098a58'},
+                {'id': '17g9e109b69', 'threadId': '17g9e109b69'}
+            ],
+            'nextPageToken': 'abc'
+        }
 
-    def test_get_messages(self):
-        """Test the get_messages method."""
-        with patch('email_api.gmail_repository.build') as mock_build:
-            mock_build.return_value.users().messages().list().execute.return_value = {'messages': []}
-            self.assertEqual(self.client.get_messages(), [])
+        (self.mock_service.users.return_value
+             .messages.return_value
+             .list.return_value
+             .execute.return_value) = self.mock_response_data
 
-    def test_get_message(self):
-        """Test the get_message method."""
-        with patch('email_api.gmail_repository.build') as mock_build:
-            mock_build.return_value.users().messages().get().execute.return_value = {'id': '1'}
-            self.assertEqual(self.client.get_message('1'), {'id': '1'})
+    
+    def test_get_email_ids_returns_data(self):
+        result = self.repo.get_email_ids(user_id='test_user')
 
-    def test_get_message_by_id(self):
-        """Test the get_message_by_id method."""
-        with patch('email_api.gmail_repository.build') as mock_build:
-            mock_build.return_value.users().messages().get().execute.return_value = {'id': '1'}
-            self.assertEqual(self.client.get_message_by_id('1'), {'id': '1'})
-
-
-
-
-
-if __name__ == '__main__':
-    unittest.main()
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0]['id'], '16f8d098a58')
+        
+        self.mock_service.users.assert_called_once()
+        self.mock_service.users().messages().list.assert_called_once_with(userId='test_user')
