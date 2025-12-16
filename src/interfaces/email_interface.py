@@ -11,7 +11,7 @@ class EmailInterface(ABC):
     """
 
     @abstractmethod
-    def get_messages():
+    def get_email_ids():
         """
         Retrieves a list of messages.
 
