@@ -4,19 +4,19 @@ from clients.openai_client import OpenAIClient
 from utils.gmail_auth_helper import get_authorized_gmail_service
 
 class EmailAgentFactory:
-    def create_email_agent(provider: str, llm: str) -> EmailAgent:
-        if provider.lower() == 'gmail':
+    def create_email_agent(email_service: str, llm: str) -> EmailAgent:
+        if email_service.lower() == 'gmail':
             gmail_service = get_authorized_gmail_service()
             if not gmail_service:
                 raise RuntimeError("Failed to authenticate with Gmail")
             email_client = GmailRepository(gmail_service)
         # TODO: Implement other email providers
-        # elif provider.lower() == 'outlook':
+        # elif email_service.lower() == 'outlook':
         #     email_client = OutlookRepository()
-        # elif provider.lower() == 'sendgrid':
+        # elif email_service.lower() == 'sendgrid':
         #     email_client = SendGridRepository()
         else:
-            raise ValueError(f"Invalid provider: {provider}")
+            raise ValueError(f"Invalid email_service: \"{email_service}\"")
 
         if llm.lower() == 'gpt':
             llm_client = OpenAIClient()
@@ -26,7 +26,7 @@ class EmailAgentFactory:
         # elif llm.lower() == 'gemini':
         #     llm_client = GeminiClient()
         else:
-            raise ValueError(f"Invalid LLM: {llm}")
+            raise ValueError(f"Invalid LLM: \"{llm}\"")
 
         return EmailAgent(llm_client, email_client)
 
