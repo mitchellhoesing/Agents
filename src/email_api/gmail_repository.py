@@ -22,9 +22,9 @@ class GmailRepository(EmailInterface):
         try:
             result = self.gmail_service.users().messages().get(userId='me', id=message_id).execute()
             return result
-        except Exception as e:
-             print(f"An error occurred: {e}")
-             return None
+        except HttpError as e:
+             logger.error(f"Gmail API failed for ID {message_id}: {e}")
+             raise MessageNotFoundError(f"Could not find message {message_id}. Error: {e}") from e
 
     def get_message_by_id(self, message_id):
         """

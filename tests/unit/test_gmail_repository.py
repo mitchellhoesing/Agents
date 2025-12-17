@@ -20,7 +20,6 @@ class TestGmailRepositoryUnit(unittest.TestCase):
              .list.return_value
              .execute.return_value) = self.mock_response_data
 
-    
     def test_get_email_ids_returns_data(self):
         result = self.repo.get_email_ids(user_id='test_user')
 
