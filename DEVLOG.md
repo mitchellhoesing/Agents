@@ -10,6 +10,9 @@
 - Implement tool call execution
 - Implement tool call logging
 - Implement factory for agent creation
+- Ensure email interface includes all methods to be enforced
+- Ensure method type hints exist for all methods
+- Ensure all methods have docstrings
 
 ### 2025-12-16
 - Fixed Factory tests. Do not want to create a gmail api connection for unittests
