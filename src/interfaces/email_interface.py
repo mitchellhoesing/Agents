@@ -10,13 +10,5 @@ class EmailInterface(ABC):
     than concrete implementations.
     """
 
-    @abstractmethod
-    def get_email_ids():
-        """
-        Retrieves a list of messages.
-
-        Returns:
-            A list of messages.
-        """
-        pass
+    pass
 
