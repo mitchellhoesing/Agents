@@ -22,3 +22,7 @@ env/
 
 # SECRETS
 .env
+
+# JSON BATCH DATA
+json_batch_data/
+
